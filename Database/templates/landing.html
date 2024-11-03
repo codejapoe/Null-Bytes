@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Null-Bytes - Database</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Null-Bytes Database" />
+    <meta property="og:description" content="Null-Bytes is a document-oriented, NoSQL database program. Null-Bytes uses JSON-like collections. This project is created on AVL Data Structure and implemented in Python." />
+    <meta property="og:image" content="/static/images/null-bytes.ico" />
+    <meta content="Codejapoe" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="/static/images/null-bytes.ico">
+
+    <!-- App css -->
+    <link href="/static/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="/static/css/app.min.css" rel="stylesheet" type="text/css" id="light-style" />
+    <link href="/static/css/app-dark.min.css" rel="stylesheet" type="text/css" id="dark-style" />
+
+</head>
+
+<body class="loading" data-layout-config='{"darkMode":false}'>
+
+    <!-- NAVBAR START -->
+    <nav class="navbar navbar-expand-lg py-lg-3 navbar-dark">
+        <div class="container">
+
+            <!-- logo -->
+            <a href="{{ url_for('home') }}" class="navbar-brand me-lg-5">
+                <h3>Null-Bytes</h3>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="mdi mdi-menu"></i>
+            </button>
+
+            <!-- menus -->
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+                <!-- left menu -->
+                <ul class="navbar-nav me-auto align-items-center">
+                    <li class="nav-item mx-lg-1">
+                        <a class="nav-link active" href="{{ url_for('home') }}">Home</a>
+                    </li>
+                    <li class="nav-item mx-lg-1">
+                        <a class="nav-link" href="https://null-bytes-docs.web.app/" target="_blank">Docs</a>
+                    </li>
+                    <li class="nav-item mx-lg-1">
+                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                    </li>
+                    <li class="nav-item mx-lg-1">
+                        <a class="nav-link" href="https://github.com/codejapoe/Null-Bytes" target="_blank">Github</a>
+                    </li>
+                </ul>
+
+                <!-- right menu -->
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item me-0">
+                        <a href="{{ url_for('signup') }}" class="nav-link d-lg-none">Sign Up</a>
+                        <a href="{{ url_for('signup') }}" class="btn btn-sm btn-light rounded-pill d-none d-lg-inline-flex">
+                            <i class="mdi mdi-account-plus-outline me-2"></i> Sign Up
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+    <!-- NAVBAR END -->
+
+    <!-- START HERO -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-5">
+                    <div class="mt-md-4">
+                        <div>
+                            <span class="badge bg-danger rounded-pill">New</span>
+                            <span class="text-white-50 ms-1">Welcome to new version of Null-Bytes</span>
+                        </div>
+                        <h2 class="text-white fw-normal mb-4 mt-3 hero-title">
+                            Null-Bytes Database
+                        </h2>
+
+                        <p class="mb-4 font-16 text-white-50">Null-Bytes is a document-oriented, NoSQL database program that uses JSON-like collections. This project is created on AVL Data Structure and implemented in Python.</p>
+
+                        <a href="{{ url_for('signup') }}" class="btn btn-success">Get Started<i class="mdi mdi-arrow-right ms-1"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-5 offset-md-2">
+                    <div class="text-md-end mt-3 mt-md-0">
+                        <img src="/static/images/startup.svg" alt="" class="img-fluid" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END HERO -->
+
+    <!-- START SERVICES -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row py-4">
+                <div class="col-lg-12">
+                    <div class="text-center">
+                        <h1 class="mt-0"><i class="mdi mdi-infinity"></i></h1>
+                        <h3>The admin is fully <span class="text-primary">responsive</span></h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="text-center p-3">
+                        <div class="avatar-sm m-auto">
+                            <span class="avatar-title bg-primary-lighten rounded-circle">
+                                <i class="uil uil-vector-square text-primary font-24"></i>
+                            </span>
+                        </div>
+                        <h4 class="mt-3">Based on Bootstrap UI</h4>
+                        <p class="text-muted mt-2 mb-0">Bootstrap theme is used for front-end development. Purchase here: <a href="https://themes.getbootstrap.com/product/hyper-responsive-admin-dashboard-template/" target="_blank">themes.getbootstrap.com</a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="text-center p-3">
+                        <div class="avatar-sm m-auto">
+                                    <span class="avatar-title bg-primary-lighten rounded-circle">
+                                        <i class="uil uil-presentation text-primary font-24"></i>
+                                    </span>
+                        </div>
+                        <h4 class="mt-3">Easy Setup</h4>
+                        <p class="text-muted mt-2 mb-0">Null-Bytes can create the database faster than any other software.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="text-center p-3">
+                        <div class="avatar-sm m-auto">
+                                    <span class="avatar-title bg-primary-lighten rounded-circle">
+                                        <i class="uil uil-apps text-primary font-24"></i>
+                                    </span>
+                        </div>
+                        <h4 class="mt-3">Real-time Data</h4>
+                        <p class="text-muted mt-2 mb-0">The data is updated automatically without refreshing the page.</p>
+                    </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- END SERVICES -->
+
+    <!-- START FAQ -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-center">
+                        <h1 class="mt-0"><i class="mdi mdi-frequently-asked-questions"></i></h1>
+                        <h3>Frequently Asked <span class="text-primary">Questions</span></h3>
+                        <p class="text-muted mt-2">Here are some of the basic types of questions for our users. For more information please contact us.</p>
+
+                        <a href="mailto:codejapoe@gmail.com" target="_blank" class="btn btn-success btn-sm mt-2"><i class="mdi mdi-email-outline me-1"></i> Email us your question</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-lg-5 offset-lg-1">
+                    <!-- Question/Answer -->
+                    <div>
+                        <div class="faq-question-q-box">Q.</div>
+                        <h4 class="faq-question text-body">How can I report bugs?</h4>
+                        <p class="faq-answer mb-4 pb-1 text-muted">You can email me if any server error occurs or any bug is found. <br>(Bugs report will not be rewarded.)</p>
+                    </div>
+                </div>
+                <!--/col-lg-5 -->
+
+                <div class="col-lg-5">
+                    <!-- Question/Answer -->
+                    <div>
+                        <div class="faq-question-q-box">Q.</div>
+                        <h4 class="faq-question text-body">Will you regularly give updates of Null-Bytes?</h4>
+                        <p class="faq-answer mb-4 pb-1 text-muted">Yes, We will update the Null-Bytes regularly. All the
+                            future updates would be available without any cost.</p>
+                    </div>
+                </div>
+                <!--/col-lg-5-->
+            </div>
+            <!-- end row -->
+
+        </div> <!-- end container-->
+    </section>
+    <!-- END FAQ -->
+
+    <!-- START FOOTER -->
+    <footer class="bg-dark py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <img src="/static/images/logo.png" alt="" class="logo-dark" height="18" />
+                    <p class="text-muted mt-4">Get in touch with the developer on the following platforms:</p>
+
+                    <ul class="social-list list-inline mt-3">
+                        <li class="list-inline-item text-center">
+                            <a href="https://www.facebook.com/codejapoe/" target="_blank" class="social-list-item border-primary text-primary"><i class="mdi mdi-facebook"></i></a>
+                        </li>
+                        <li class="list-inline-item text-center">
+                            <a href="mailto:codejapoe@gmail.com" target="_blank" class="social-list-item border-info text-info"><i class="mdi mdi-email"></i></a>
+                        </li>
+                        <li class="list-inline-item text-center">
+                            <a href="https://github.com/codejapoe" target="_blank" class="social-list-item border-secondary text-secondary"><i class="mdi mdi-github"></i></a>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <div class="col-lg-2 mt-3 mt-lg-0">
+                    <h5 class="text-light">Apps</h5>
+
+                    <ul class="list-unstyled ps-0 mb-0 mt-3">
+                        <li class="mt-2"><a href="http://raincloudmyanmar.pythonanywhere.com/" target="_blank" class="text-muted">Rain-Cloud</a></li>
+                        <li class="mt-2"><a href="https://diamond-prince-2003.web.app/" target="_blank" class="text-muted">Product Management System</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 mt-3 mt-lg-0">
+                    <h5 class="text-light">Discover</h5>
+
+                    <ul class="list-unstyled ps-0 mb-0 mt-3">
+                        <li class="mt-2"><a href="https://saunik.net" target="_blank" class="text-muted">Portfolio</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mt-5">
+                        <p class="text-muted mt-4 text-center mb-0">© 2021 Codejapoe. Design and coded by Jay Saunik</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- END FOOTER -->
+
+    <!-- bundle -->
+    <script src="/static/js/vendor.min.js"></script>
+    <script src="/static/js/app.min.js"></script>
+
+</body>
+
+</html>

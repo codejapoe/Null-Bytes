@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Null-Bytes</title>
+    <link rel="shortcut icon" href="./img/null-bytes.ico" type="image/x-icon">
+    <meta property="og:url" content="http://null-bytes.herokuapp.com">
+    <meta property="og:title" content="Null-Bytes Database">
+    <meta property="og:description" content="Null-Bytes is a cross-platform document-oriented, NoSQL database program. Null-Bytes uses JSON-like collections (This is the alternative developer tool of MongoDB). This project is developed by Aung Kaung Khant @ J. Saunik.">
+    <meta property="og:image" content="./img/null-bytes.ico">
+    <link rel="stylesheet" href="./css/libs.bundle.css">
+    <link rel="stylesheet" href="./css/theme.bundle.css">
+</head>
+<body>
+  <nav class="navbar navbar-dark navbar-vibrant sticky-top" style="border: none;">
+    <div class="container-fluid">
+
+      <!-- Brand -->
+      <a class="navbar-brand">Null-Bytes</a>
+      <span class="navbar-text text-white">
+        © 2021 Copyright: Codejapoe
+      </span>
+    </div>
+  </nav><br>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-body text-center">
+        <div class="row justify-content-center">
+          <div class="col-12 col-xl-10">
+    
+            <!-- Image -->
+            <img src="./img/cover.svg" alt="..." class="img-fluid mt-n5 mb-4" style="max-width: 272px; height: 250px;">
+    
+            <!-- Title -->
+            <h2 class="mb-2">
+              We released Null-Bytes to make the world a better place.
+            </h2>
+    
+            <!-- Content -->
+            <p class="text-muted">
+              Null-Bytes is currently in version 1.0. If you found vulnerabilies or bugs, please report to <b>codejapoe.gmail.com</b> for further improvements.
+            </p>
+    
+            <!-- Button -->
+            <a href="https://nullbytes.pythonanywhere.com/" target="_blank" class="btn btn-primary">
+              Try it for free
+            </a>
+    
+          </div>
+        </div> <!--&nnbsp;/ .row -->
+      </div>
+    </div>
+
+    <ul class="nav nav-tabs" id="pills-tab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="pills-docs-tab" data-bs-toggle="pill" data-bs-target="#pills-docs" type="button" role="tab" aria-controls="pills-docs" aria-selected="true">Documentation</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-dev-tab" data-bs-toggle="pill" data-bs-target="#pills-dev" type="button" role="tab" aria-controls="pills-dev" aria-selected="false">Developer</button>
+      </li>
+    </ul><br>
+
+
+  <div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade active show" id="pills-docs" role="tabpanel" aria-labelledby="pills-docs-tab">
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-header">
+                
+            <h4 class="card-header-title">
+              Installation
+            </h4>
+                
+          </div>
+          <div class="card-body">
+                  
+            <div class="alert alert-warning" role="alert">
+              This API is only available in Python Programming.
+            </div>
+
+            <code class="highlight html bg-dark hljs xml">
+              pip install nullbytes
+            </code>
+
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+              
+            <h4 class="card-header-title">
+              Setup
+            </h4>
+              
+          </div>
+          <div class="card-body">
+
+            <p class="card-text">
+              Place your username, password, and database-id in 'api' dictionary.
+            </p>
+
+            <code class="highlight html bg-dark hljs xml">
+              import nullbytes<br>
+              api = {'username': 'your_username', 'password': 'your_password', 'database-id': 'your_database_id'}
+            </code>
+
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-header">
+              
+            <h4 class="card-header-title">
+              Insert Data
+            </h4>
+              
+          </div>
+          <div class="card-body">
+
+            <p class="card-text">
+              You can use any data-id, and data in 'data' dictionary to insert your data.<br>
+              Existing data-id will update the data.
+            </p>
+
+            <code class="highlight html bg-dark hljs xml">
+              data = {'_id': 'any_id', 'data': 'sample'}<br>
+              nullbytes.insert(api, data)
+            </code>
+
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+              
+            <h4 class="card-header-title">
+              Search Data
+            </h4>
+              
+          </div>
+          <div class="card-body">
+
+            <p class="card-text">
+              You can use any data-id in 'data' dictionary to search your specific data.
+            </p>
+
+            <code class="highlight html bg-dark hljs xml">
+              data_id = 'any_id'<br>
+              nullbytes.search(api, data_id)
+            </code>
+
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+              
+            <h4 class="card-header-title">
+              Delete Data
+            </h4>
+              
+          </div>
+          <div class="card-body">
+
+            <p class="card-text">
+              You can use any data-id in 'data' dictionary to delete your data.
+            </p>
+
+            <code class="highlight html bg-dark hljs xml">
+              data_id = 'any_id'<br>
+              nullbytes.delete(api, data_id)
+            </code>
+
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+              
+            <h4 class="card-header-title">
+              Fetch Data
+            </h4>
+              
+          </div>
+          <div class="card-body">
+
+            <code class="highlight html bg-dark hljs xml">
+              nullbytes.fetch(api)
+            </code>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  
+    <div class="tab-pane fade" id="pills-dev" role="tabpanel" aria-labelledby="pills-dev-tab">
+      <div class="container-fluid">
+
+        <p>Null-Bytes Python API is open-source for developers.
+          <a href="https://github.com/codejapoe/Null-Bytes-API" target="_blank" class="btn btn-primary">
+            <span class="fe fe-github"></span>
+            Github Repo
+          </a>
+        </p>
+
+        <div class="alert alert-info" role="alert">
+          You can create the API in any programming language if you are an API Developer. 
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+                
+            <h4 class="card-header-title">
+              Insert Data
+            </h4>
+                
+          </div>
+          <div class="card-body">
+                  
+            <code class="highlight html bg-dark hljs xml">
+              POST https://nullbytes.pythonanywhere.com/data/insert<br>
+              Content-Type: application/json<br><br>
+
+              {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;api: {<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;username: 'your_username',<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password: 'your_password',<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;database-id: 'your_database_id'<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;}, data: {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_id: 'any_id',<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data: 'any_data'<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+              }
+            </code>
+
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+                
+            <h4 class="card-header-title">
+              Search Data
+            </h4>
+                
+          </div>
+          <div class="card-body">
+                  
+            <code class="highlight html bg-dark hljs xml">
+              POST https://nullbytes.pythonanywhere.com/data/search<br>
+              Content-Type: application/json<br><br>
+
+              {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;api: {<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;username: 'your_username',<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password: 'your_password',<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;database-id: 'your_database_id'<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;}, _id: 'any_id'<br>
+              }
+            </code>
+
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+                
+            <h4 class="card-header-title">
+              Delete Data
+            </h4>
+                
+          </div>
+          <div class="card-body">
+                  
+            <code class="highlight html bg-dark hljs xml">
+              DELETE https://nullbytes.pythonanywhere.com/data/delete<br>
+              Content-Type: application/json<br><br>
+
+              {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;api: {<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;username: 'your_username',<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password: 'your_password',<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;database-id: 'your_database_id'<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;}, _id: 'any_id'<br>
+              }
+            </code>
+
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+                
+            <h4 class="card-header-title">
+              Fetch Data
+            </h4>
+                
+          </div>
+          <div class="card-body">
+                  
+            <code class="highlight html bg-dark hljs xml">
+              GET https://nullbytes.pythonanywhere.com/data/fetch<br>
+              Content-Type: application/json<br><br>
+
+              {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;api: {<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;username: 'your_username',<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;password: 'your_password',<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;database-id: 'your_database_id'<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+              }
+            </code>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+    
+  </div>
+  </div>  
+  <br><hr>
+        
+    <script src="./js/theme.bundle.js"></script>
+    <script src="./js/vendor.bundle.js"></script>
+
+</body></html>

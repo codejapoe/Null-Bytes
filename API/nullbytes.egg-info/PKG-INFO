@@ -1,0 +1,24 @@
+Metadata-Version: 2.1
+Name: nullbytes
+Version: 1.0.0
+Summary: The API used to connect to the Null-Bytes Databases for CRUD operations
+Home-page: https://nullbytes.pythonanywhere.com/
+Author: Codejapoe
+Author-email: codejapoe@gmail.com
+License: MIT
+Keywords: api
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Education
+Classifier: Operating System :: Microsoft :: Windows :: Windows 10
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+License-File: LICENCE.txt
+
+The API used to connect to the Null-Bytes Databases for CRUD operations
+
+Change Log
+==========
+
+1.0.0 (29/06/2023)
+-------------------
+- Second Release
