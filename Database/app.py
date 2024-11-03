@@ -1,4 +1,4 @@
-from flask import *
+from flask import Flask, redirect, render_template, session, request
 import uuid
 import json
 import re
@@ -506,7 +506,6 @@ def createDatabase4(root, _id):
 
 def deleteDatabase(root, api):
     username = api['username']
-    password = api['password']
     database_id = api['database-id']
 
     root = deleteDatabase1(root, username, database_id)
@@ -1220,6 +1219,8 @@ def getNumofUser2(root, num):
         num = getNumofUser2(root.right, num)
         return num
 
+root = startDatabase(None)
+
 @app.route("/")
 def home():
     if 'username' in session:
@@ -1362,13 +1363,12 @@ def createDB():
     except:
         return render_template('error.html', code = 500, message = "Internal Server Error", dir = "/database")
 
-@app.route("/database/delete", methods=['POST'])
-def deleteDB():
+@app.route("/database/delete/<id>", methods=['POST'])
+def deleteDB(id):
     try:
         global root
         username = session['username']
         password = session['password']
-        id = request.form['id']
         api = {'username': username, 'password': password, 'database-id': id}
         root = deleteDatabase(root, api)
         return redirect("/database")
@@ -1483,7 +1483,7 @@ def fetchData():
         return json.dumps({'success': True, 'data': data}), 202, {'ContentType':'application/json'}
 
     except Exception as error:
-        return json.dumps({'success': False, 'errors': {'code': 500, 'message': 'Internal Server Error'}}), 500, {'ContentType':'application/json'}    
+        return json.dumps({'success': False, 'errors': {'code': 500, 'message': 'Internal Server Error', 'error': error}}), 500, {'ContentType':'application/json'}    
 
 @app.route("/data/search", methods=['POST'])
 def searchData():
@@ -1500,5 +1500,4 @@ def searchData():
         return json.dumps({'success': False, 'errors': {'code': 500, 'message': 'Internal Server Error', 'error': error}}), 500, {'ContentType':'application/json'}
 
 if __name__ == "__main__":
-    root = startDatabase(None)
     app.run()
