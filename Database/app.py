@@ -2,11 +2,21 @@ from flask import Flask, redirect, render_template, session, request
 import uuid
 import json
 import re
+import os.path
+import pickle
 
 app = Flask(__name__, static_url_path='/static')
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.secret_key = 'null-bytes'
 
+def store_avl(structure):
+    with open('database.pkl', 'wb') as f:
+        pickle.dump(structure, f)
+
+def load_avl():
+    with open('database.pkl', 'rb') as f:
+        return pickle.load(f)
+    
 class Users:
     def __init__(self, char, length, username, password, database, sub_str, sub_length, _id, data):
         self.char = char
@@ -607,7 +617,10 @@ def insert(root, api, data):
 
     try:
         _id = data['_id'].lower()
-        _id = re.sub('[^a-zA-Z-]+', '', _id)
+        if _id[0] == "-":
+            _id = "dataID-" + _id
+
+        _id = re.sub('[^A-Za-z0-9.-]+', '', _id)
 
     except:
         _id = str(uuid.uuid4())
@@ -1221,6 +1234,9 @@ def getNumofUser2(root, num):
 
 root = startDatabase(None)
 
+if os.path.isfile("database.pkl"):
+    root = load_avl()
+
 @app.route("/")
 def home():
     if 'username' in session:
@@ -1315,8 +1331,10 @@ def create():
         
         if data is not False:
             root = data
+            store_avl(root)
             session['username'] = username
             session['password'] = request.form['password']
+
             return redirect("/")
         
         else:
@@ -1335,6 +1353,7 @@ def deleteAcc():
         if password == getUserInfo(root, username):
             api = {'username': username, 'password': password}
             root = deleteAccount(root, api)
+            store_avl(root)
 
             return redirect("/")
     
@@ -1355,6 +1374,8 @@ def createDB():
 
         if data != False:
             root = data
+            store_avl(root)
+
             return redirect('/database')
 
         else:
@@ -1371,6 +1392,8 @@ def deleteDB(id):
         password = session['password']
         api = {'username': username, 'password': password, 'database-id': id}
         root = deleteDatabase(root, api)
+        store_avl(root)
+
         return redirect("/database")
 
     except:
@@ -1424,6 +1447,7 @@ def insert_data(id):
         
         api = {'username': session['username'], 'password': session['password'], 'database-id': id}
         root = insert(root, api, data)
+        store_avl(root)
 
         return redirect('/database/view/' + id)
 
@@ -1439,6 +1463,7 @@ def delete_data(id):
         _id = id[1]
         api = {'username': session['username'], 'password': session['password'], 'database-id': db_id}
         root = delete(root, api, _id)
+        store_avl(root)
 
         return redirect('/database/view/' + db_id)
 
@@ -1453,6 +1478,7 @@ def insertData():
         api = receive['api']
         data = json.loads(receive['data'])
         root = insert(root, api, data)
+        store_avl(root)
 
         return json.dumps({'success': True, 'data': data}), 201, {'ContentType':'application/json'}
 
@@ -1467,6 +1493,7 @@ def deleteData():
         api = receive['api']
         _id = receive['_id']
         root = delete(root, api, _id)
+        store_avl(root)
 
         return json.dumps({'success': True}), 204, {'ContentType':'application/json'}
 
