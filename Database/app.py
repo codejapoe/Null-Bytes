@@ -1442,7 +1442,7 @@ def fetch_data(id):
         password = session['password']
 
         try:
-            return render_template('data.html', id=id)
+            return render_template('data.html', username=username, password=password, id=id)
 
         except:
             session.clear()
