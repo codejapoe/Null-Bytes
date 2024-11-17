@@ -643,7 +643,7 @@ def insert(root, api, data):
         if _id[0] == "-":
             _id = "dataID-" + _id
 
-        _id = re.sub('[^A-Za-z0-9.-]+', '', _id)
+        _id = re.sub('[^A-Za-z0-9._-]+', '', _id)
 
     except:
         _id = str(uuid.uuid4())
