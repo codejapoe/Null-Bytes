@@ -1,31 +1,21 @@
-"""
-Developer: Codejapoe
-Website: codejapoe.xyz
-"""
-
-# Library imports
-from flask import Flask, redirect, render_template, session, request
 import uuid
 import json
 import re
 import os.path
 import pickle
 
-# Configuration
-app = Flask(__name__, static_url_path='/static')
-app.config["TEMPLATES_AUTO_RELOAD"] = True
-app.secret_key = 'null-bytes'
-
 # Store the data structure into a pickle file
 def store_avl(structure):
     with open('database.pkl', 'wb') as f:
         pickle.dump(structure, f)
 
+
 # Load the data structure from the pickle file
 def load_avl():
     with open('database.pkl', 'rb') as f:
         return pickle.load(f)
-    
+
+
 # AVL Data Structure: Users -> Length (Length of User ID) -> ID -> User -> Database -> Sub_ID (Database ID) -> Data
 class Users:
     def __init__(self, char, length, username, password, database, sub_str, sub_length, _id, data):
@@ -34,6 +24,7 @@ class Users:
         self.left = None
         self.right = None
 
+
 class Length:
     def __init__(self, length, username, password, database, sub_str, sub_length, _id, data):
         self.length = length
@@ -41,6 +32,7 @@ class Length:
         self.height = 1
         self.left = None
         self.right = None
+
 
 class ID:
     def __init__(self, username, password, database, sub_str, sub_length, _id, data):
@@ -51,6 +43,7 @@ class ID:
         self.left = None
         self.right = None
 
+
 class User:
     def __init__(self, database, sub_str, sub_length, _id, data):
         self.database = database
@@ -59,12 +52,14 @@ class User:
         self.left = None
         self.right = None
 
+
 class Database:
     def __init__(self, sub_str, sub_length, _id, data):
         self.substr = sub_str
         self.sub_id = Sub_ID(sub_length, _id, data)
         self.left = None
         self.right = None
+
 
 class Sub_ID:
     def __init__(self, sub_length, _id, data):
@@ -74,6 +69,7 @@ class Sub_ID:
         self.left = None
         self.right = None
 
+
 class Data:
     def __init__(self, _id, data):
         self._id = _id
@@ -81,6 +77,7 @@ class Data:
         self.height = 1
         self.left = None
         self.right = None
+
 
 # Insert English alphabets and numbers into the Data Structure
 def insertChar(root, char):
@@ -97,14 +94,17 @@ def insertChar(root, char):
 
         return root
 
+
 # Database setup
 def startDatabase(root):
-    char = ['i', '9', 'r', '4', 'e', 'n', 'w', '2', '7', 'c', 'g', 'l', 'p', 'u', 'y', '1', '3', '6', '8', 'b', 'd', 'f', 'h', 'k', 'm', 'o', 'q', 't', 'v', 'x', 'z', '0', '5', 'a', 'j', 's']
+    char = ['i', '9', 'r', '4', 'e', 'n', 'w', '2', '7', 'c', 'g', 'l', 'p', 'u', 'y', '1', '3', '6', '8', 'b', 'd',
+            'f', 'h', 'k', 'm', 'o', 'q', 't', 'v', 'x', 'z', '0', '5', 'a', 'j', 's']
 
     for i in char:
         root = insertChar(root, i)
 
     return root
+
 
 # Database initalization
 def insertCharintoDB(root, char):
@@ -121,15 +121,18 @@ def insertCharintoDB(root, char):
 
         return root
 
+
 # ID setup
 def startID():
     root = None
-    char = ['i', '9', 'r', '4', 'e', 'n', 'w', '2', '7', 'c', 'g', 'l', 'p', 'u', 'y', '1', '3', '6', '8', 'b', 'd', 'f', 'h', 'k', 'm', 'o', 'q', 't', 'v', 'x', 'z', '0', '5', 'a', 'j', 's']
+    char = ['i', '9', 'r', '4', 'e', 'n', 'w', '2', '7', 'c', 'g', 'l', 'p', 'u', 'y', '1', '3', '6', '8', 'b', 'd',
+            'f', 'h', 'k', 'm', 'o', 'q', 't', 'v', 'x', 'z', '0', '5', 'a', 'j', 's']
 
     for i in char:
         root = insertCharintoDB(root, i)
 
     return root
+
 
 # Account creation
 def createAccount(root, api):
@@ -142,6 +145,7 @@ def createAccount(root, api):
         return root
 
     return data
+
 
 def createAccount1(root, username, password):
     if username[0] == root.char:
@@ -166,6 +170,7 @@ def createAccount1(root, username, password):
             return root
 
     return data
+
 
 def createAccount2(root, username, password):
     if root is None:
@@ -229,6 +234,7 @@ def createAccount2(root, username, password):
 
             return data
 
+
 def createAccount3(root, username, password):
     if root is None:
         return ID(username, password, None, None, None, None, None)
@@ -254,6 +260,7 @@ def createAccount3(root, username, password):
 
         return data
 
+
 # Account deletion
 def deleteAccount(root, api):
     username = api['username']
@@ -263,6 +270,7 @@ def deleteAccount(root, api):
         root = deleteAccount1(root, username, password)
 
     return root
+
 
 def deleteAccount1(root, username, password):
     if username[0] == root.char:
@@ -275,6 +283,7 @@ def deleteAccount1(root, username, password):
         root.right = deleteAccount1(root.right, username, password)
 
     return root
+
 
 def deleteAccount2(root, username, password):
     if len(username) == root.length:
@@ -309,6 +318,7 @@ def deleteAccount2(root, username, password):
             return leftRotate(root)
 
     return root
+
 
 def deleteAccount3(root, username, password):
     if username == root.username:
@@ -362,6 +372,7 @@ def deleteAccount3(root, username, password):
 
     return root
 
+
 # Get user data
 def getUserInfo(root, username):
     if username[0] == root.char:
@@ -373,6 +384,7 @@ def getUserInfo(root, username):
     elif username[0] > root.char:
         return getUserInfo(root.right, username)
 
+
 def getUserInfo2(root, username):
     if len(username) == root.length:
         return getUserInfo3(root.user_info, username)
@@ -383,6 +395,7 @@ def getUserInfo2(root, username):
     elif len(username) > root.length:
         return getUserInfo2(root.right, username)
 
+
 def getUserInfo3(root, username):
     if username == root.username:
         return root.password
@@ -392,6 +405,7 @@ def getUserInfo3(root, username):
 
     elif username > root.username:
         return getUserInfo3(root.right, username)
+
 
 # Database creation
 def createDatabase(root, api):
@@ -405,6 +419,7 @@ def createDatabase(root, api):
         return root
 
     return data
+
 
 def createDatabase1(root, username, _id):
     if username[0] == root.char:
@@ -430,6 +445,7 @@ def createDatabase1(root, username, _id):
 
     return data
 
+
 def createDatabase2(root, username, _id):
     if len(username) == root.length:
         data = createDatabase3(root.user_info, username, _id)
@@ -453,6 +469,7 @@ def createDatabase2(root, username, _id):
             return root
 
     return data
+
 
 def createDatabase3(root, username, _id):
     if username == root.username:
@@ -479,6 +496,7 @@ def createDatabase3(root, username, _id):
             return root
 
     return data
+
 
 def createDatabase4(root, _id):
     if root is None:
@@ -535,6 +553,7 @@ def createDatabase4(root, _id):
 
             return data
 
+
 # Database deletion
 def deleteDatabase(root, api):
     username = api['username']
@@ -543,6 +562,7 @@ def deleteDatabase(root, api):
     root = deleteDatabase1(root, username, database_id)
 
     return root
+
 
 def deleteDatabase1(root, username, _id):
     if username[0] == root.char:
@@ -556,6 +576,7 @@ def deleteDatabase1(root, username, _id):
 
     return root
 
+
 def deleteDatabase2(root, username, _id):
     if len(username) == root.length:
         root.user_info = deleteDatabase3(root.user_info, username, _id)
@@ -568,6 +589,7 @@ def deleteDatabase2(root, username, _id):
 
     return root
 
+
 def deleteDatabase3(root, username, _id):
     if username == root.username:
         root.user_data = deleteDatabase4(root.user_data, _id)
@@ -579,6 +601,7 @@ def deleteDatabase3(root, username, _id):
         root.right = deleteDatabase3(root.right, username, _id)
 
     return root
+
 
 def deleteDatabase4(root, _id):
     if _id == root.database:
@@ -632,6 +655,7 @@ def deleteDatabase4(root, _id):
 
     return root
 
+
 # Data insertion
 def insert(root, api, data):
     username = api['username']
@@ -647,13 +671,14 @@ def insert(root, api, data):
 
     except:
         _id = str(uuid.uuid4())
-        
+
     data['_id'] = _id
 
     if password == getUserInfo(root, username):
         root = insert1(root, username, database_id, data, _id)
 
     return root
+
 
 def insert1(root, username, _id, data, data_id):
     if username[0] == root.char:
@@ -667,6 +692,7 @@ def insert1(root, username, _id, data, data_id):
 
     return root
 
+
 def insert2(root, username, _id, data, data_id):
     if len(username) == root.length:
         root.user_info = insert3(root.user_info, username, _id, data, data_id)
@@ -678,6 +704,7 @@ def insert2(root, username, _id, data, data_id):
         root.right = insert2(root.right, username, _id, data, data_id)
 
     return root
+
 
 def insert3(root, username, _id, data, data_id):
     if username == root.username:
@@ -691,6 +718,7 @@ def insert3(root, username, _id, data, data_id):
 
     return root
 
+
 def insert4(root, _id, data, data_id):
     if _id == root.database:
         root.data_id = insert5(root.data_id, data, data_id)
@@ -703,6 +731,7 @@ def insert4(root, _id, data, data_id):
 
     return root
 
+
 def insert5(root, data, _id):
     if _id[0] == root.substr:
         root.sub_id = insert6(root.sub_id, data, _id)
@@ -714,6 +743,7 @@ def insert5(root, data, _id):
         root.right = insert5(root.right, data, _id)
 
     return root
+
 
 def insert6(root, data, _id):
     if root is None:
@@ -760,6 +790,7 @@ def insert6(root, data, _id):
 
         return root
 
+
 def insert7(root, data, _id):
     if root is None:
         return Data(_id, data)
@@ -805,6 +836,7 @@ def insert7(root, data, _id):
 
             return root
 
+
 # Data deletion
 def delete(root, api, _id):
     username = api['username']
@@ -815,6 +847,7 @@ def delete(root, api, _id):
         root = delete1(root, username, database_id, _id)
 
     return root
+
 
 def delete1(root, username, _id, data_id):
     if username[0] == root.char:
@@ -828,6 +861,7 @@ def delete1(root, username, _id, data_id):
 
     return root
 
+
 def delete2(root, username, _id, data_id):
     if len(username) == root.length:
         root.user_info = delete3(root.user_info, username, _id, data_id)
@@ -839,6 +873,7 @@ def delete2(root, username, _id, data_id):
         root.right = delete2(root.right, username, _id, data_id)
 
     return root
+
 
 def delete3(root, username, _id, data_id):
     if username == root.username:
@@ -852,6 +887,7 @@ def delete3(root, username, _id, data_id):
 
     return root
 
+
 def delete4(root, _id, data_id):
     if _id == root.database:
         root.data_id = delete5(root.data_id, data_id)
@@ -863,6 +899,7 @@ def delete4(root, _id, data_id):
         root.right = delete4(root.right, _id, data_id)
 
     return root
+
 
 def delete5(root, _id):
     if _id[0] == root.substr:
@@ -876,6 +913,7 @@ def delete5(root, _id):
 
     return root
 
+
 def delete6(root, _id):
     if len(_id) == root.sub_length:
         root.data_tree = delete7(root.data_tree, _id)
@@ -887,6 +925,7 @@ def delete6(root, _id):
         root.right = delete6(root.right, _id)
 
     return root
+
 
 def delete7(root, _id):
     if _id == root._id:
@@ -942,6 +981,7 @@ def delete7(root, _id):
 
     return root
 
+
 # Data search
 def search(root, api, _id):
     username = api['username']
@@ -955,6 +995,7 @@ def search(root, api, _id):
     else:
         return {}
 
+
 def search1(root, username, _id, data_id):
     if username[0] == root.char:
         data = search2(root.id, username, _id, data_id)
@@ -966,6 +1007,7 @@ def search1(root, username, _id, data_id):
         data = search1(root.right, username, _id, data_id)
 
     return data
+
 
 def search2(root, username, _id, data_id):
     if len(username) == root.length:
@@ -979,6 +1021,7 @@ def search2(root, username, _id, data_id):
 
     return data
 
+
 def search3(root, username, _id, data_id):
     if username == root.username:
         data = search4(root.user_data, _id, data_id)
@@ -990,6 +1033,7 @@ def search3(root, username, _id, data_id):
         data = search3(root.right, username, _id, data_id)
 
     return data
+
 
 def search4(root, _id, data_id):
     if _id == root.database:
@@ -1003,6 +1047,7 @@ def search4(root, _id, data_id):
 
     return data
 
+
 def search5(root, _id):
     if _id[0] == root.substr:
         data = search6(root.sub_id, _id)
@@ -1015,6 +1060,7 @@ def search5(root, _id):
 
     return data
 
+
 def search6(root, _id):
     if len(_id) == root.sub_length:
         data = search7(root.data_tree, _id)
@@ -1026,6 +1072,7 @@ def search6(root, _id):
         data = search6(root.right, _id)
 
     return data
+
 
 def search7(root, _id):
     if root is None:
@@ -1044,16 +1091,19 @@ def search7(root, _id):
 
         return data
 
+
 # Tree balacing
 def getHeight(root):
     if not root:
         return 0
     return root.height
 
+
 def getBalance(root):
     if not root:
         return 0
     return getHeight(root.left) - getHeight(root.right)
+
 
 # Rotation
 def rightRotate(node):
@@ -1065,6 +1115,7 @@ def rightRotate(node):
     y.height = 1 + max(getHeight(y.left), getHeight(y.right))
     return y
 
+
 def leftRotate(node):
     y = node.right
     x = y.left
@@ -1074,10 +1125,12 @@ def leftRotate(node):
     y.height = 1 + max(getHeight(y.left), getHeight(y.right))
     return y
 
+
 def getNode(root):
     if root is None or root.left is None:
         return root
     return getNode(root.left)
+
 
 # Get database names
 def getDatabase(root, api):
@@ -1091,6 +1144,7 @@ def getDatabase(root, api):
     else:
         return []
 
+
 def getDatabase1(root, username):
     if username[0] == root.char:
         data = getDatabase2(root.id, username)
@@ -1102,6 +1156,7 @@ def getDatabase1(root, username):
         data = getDatabase1(root.right, username)
 
     return data
+
 
 def getDatabase2(root, username):
     if len(username) == root.length:
@@ -1115,6 +1170,7 @@ def getDatabase2(root, username):
 
     return data
 
+
 def getDatabase3(root, username):
     if username == root.username:
         data = getDatabase4(root.user_data, [])
@@ -1127,6 +1183,7 @@ def getDatabase3(root, username):
 
     return data
 
+
 def getDatabase4(root, data):
     if root is None:
         return data
@@ -1136,6 +1193,7 @@ def getDatabase4(root, data):
         data.append(root.database)
         data = getDatabase4(root.right, data)
         return data
+
 
 # Get data
 def getData(root, api):
@@ -1152,6 +1210,7 @@ def getData(root, api):
     except:
         return None
 
+
 def getData1(root, username, _id):
     if username[0] == root.char:
         data = getData2(root.id, username, _id)
@@ -1163,6 +1222,7 @@ def getData1(root, username, _id):
         data = getData1(root.right, username, _id)
 
     return data
+
 
 def getData2(root, username, _id):
     if len(username) == root.length:
@@ -1176,6 +1236,7 @@ def getData2(root, username, _id):
 
     return data
 
+
 def getData3(root, username, _id):
     if username == root.username:
         data = getData4(root.user_data, _id)
@@ -1187,6 +1248,7 @@ def getData3(root, username, _id):
         data = getData3(root.right, username, _id)
 
     return data
+
 
 def getData4(root, _id):
     if _id == root.database:
@@ -1200,6 +1262,7 @@ def getData4(root, _id):
 
     return data
 
+
 def getData5(root, data):
     if root is None:
         return data
@@ -1209,6 +1272,7 @@ def getData5(root, data):
         data = getData6(root.sub_id, data)
         data = getData5(root.right, data)
         return data
+
 
 def getData6(root, data):
     if root is None:
@@ -1220,6 +1284,7 @@ def getData6(root, data):
         data = getData6(root.right, data)
         return data
 
+
 def getData7(root, data):
     if root is None:
         return data
@@ -1230,26 +1295,29 @@ def getData7(root, data):
         data = getData7(root.right, data)
         return data
 
+
 # Get total number of users
 def getNumofUser(root, num):
     if root is None:
         return num
-    
+
     else:
         num = getNumofUser(root.left, num)
         num = getNumofUser1(root.id, num)
         num = getNumofUser(root.right, num)
         return num
-    
+
+
 def getNumofUser1(root, num):
     if root is None:
         return num
-    
+
     else:
         num = getNumofUser1(root.left, num)
         num = getNumofUser2(root.user_info, num)
         num = getNumofUser1(root.right, num)
         return num
+
 
 def getNumofUser2(root, num):
     if root is None:
@@ -1262,287 +1330,19 @@ def getNumofUser2(root, num):
         num = getNumofUser2(root.right, num)
         return num
 
+
 # Initalization
 root = startDatabase(None)
-
-if os.path.isfile("database.pkl"):
-    root = load_avl()
-
-@app.route("/")
-def home():
-    if 'username' in session:
-        username = session['username']
-        password = session['password']
-        api = {'username': username, 'password': password}
-        
-        try:
-            getUserInfo(root, username)
-
-        except:
-            session.clear()
-            return redirect("/")
-        
-        databases = getDatabase(root, api)
-
-        if databases[0] is None:
-            numofDatabases = 0
-
-        else:
-            numofDatabases = len(databases)
-
-        return render_template('dashboard.html', username = username, password = password, databases = numofDatabases, users = getNumofUser(root, 0))
-    
-    else:
-        return render_template('landing.html')
-
-@app.route("/signup")
-def signup():
-    if 'username' in session:
-        return redirect("/")
-    
-    else:
-        return render_template('signup.html')
-
-@app.route("/login")
-def login():
-    if 'username' in session:
-        return redirect("/")
-    
-    else:
-        return render_template('login.html', username="")
-    
-@app.route("/database")
-def database():
-    if 'username' in session:
-        username = session['username']
-        password = session['password']
-        api = {'username': username, 'password': password}
-
-        try:
-            databases = getDatabase(root, api)
-            return render_template('database.html', username = username, password = password, databases = databases)
-
-        except:
-            session.clear()
-            return redirect("/")
-        
-    else:
-        return render_template('landing.html')
-    
-@app.route("/logout")
-def logout():
-    session.clear()
-    return redirect("/")
-    
-@app.route("/signin", methods=['POST'])
-def signin():
-    try:
-        api = {'username': request.form['username']}
-        password = getUserInfo(root, api['username'])
-
-        if request.form['password'] == password:
-            session['username'] = request.form['username']
-            session['password'] = password
-            return redirect("/")
-        
-        else:
-            return render_template('login.html', message="Incorrect username or password.", username=request.form['username'])
-        
-    except:
-        return render_template('login.html', message="User does not exist or Internal Server Error.")
-
-@app.route("/account/create", methods=['POST'])
-def create():
-    try:
-        global root
-        username = request.form['username'].lower()
-        username = ''.join(filter(str.isalnum, username))
-        api = {'username': str(username), 'password': request.form['password']}
-        data = createAccount(root, api)
-        
-        if data is not False:
-            root = data
-            store_avl(root)
-            session['username'] = username
-            session['password'] = request.form['password']
-
-            return redirect("/")
-        
-        else:
-            return render_template('signup.html', message="Username already exists.")
-        
-    except:
-        return render_template('signup.html', message="500 Internal Server Error.")
-    
-@app.route("/account/delete", methods=['POST'])
-def deleteAcc():
-    try:
-        global root
-        username = session['username']
-        password = request.form['password']
-
-        if password == getUserInfo(root, username):
-            api = {'username': username, 'password': password}
-            root = deleteAccount(root, api)
-            store_avl(root)
-
-            return redirect("/")
-    
-        else:
-            return render_template('error.html', code = 401, message = "Unauthorised - Incorrect Password", dir = "/")
-
-    except:
-        return render_template('error.html', code = 500, message = "Internal Server Error", dir = "/")
-
-@app.route("/database/create", methods=['POST'])
-def createDB():
-    try:
-        global root
-        id = request.form['id'].lower()
-        id = ''.join(filter(lambda c: c.isalnum() or c == '-', id))
-
-        if id.startswith('-'):
-            id[0] == "0"
-
-        api = {'username': session['username'], 'password': session['password'], 'database-id': id}
-        data = createDatabase(root, api)
-
-        if data is not False:
-            root = data
-            store_avl(root)
-
-            return redirect('/database')
-
-        else:
-            return render_template('error.html', code = 409, message = "Database ID already exists.", dir = "/database")
-
-    except:
-        return render_template('error.html', code = 500, message = "Internal Server Error", dir = "/database")
-    
-@app.route("/database/delete/<id>", methods=['POST'])
-def deleteDB(id):
-    try:
-        global root
-        username = session['username']
-        password = session['password']
-        api = {'username': username, 'password': password, 'database-id': id}
-        root = deleteDatabase(root, api)
-        store_avl(root)
-
-        return redirect("/database")
-
-    except:
-        return render_template('error.html', code = 500, message = "Internal Server Error", dir = "/database")
-    
-@app.route("/database/view/<id>", methods=['GET'])
-def fetch_data(id):
-    if 'username' in session:
-        global root
-        username = session['username']
-        password = session['password']
-
-        try:
-            return render_template('data.html', id=id)
-
-        except:
-            session.clear()
-            return redirect("/")
-    
-    else:
-        return redirect("/")
-    
-@app.route("/database/insert/<id>", methods=['POST'])
-def insert_data(id):
-    try:
-        global root
-
-        try:
-            data = json.loads(request.form['data'])
-
-        except:
-            return render_template('error.html', code = 500, message = "Internal Server Error - please insert the data with correct syntax.", dir = "/database/view/" + id)
-        
-        api = {'username': session['username'], 'password': session['password'], 'database-id': id}
-        root = insert(root, api, data)
-        store_avl(root)
-
-        return redirect('/database/view/' + id)
-
-    except:
-        return render_template('error.html', code = 500, message = "Internal Server Error", dir = "/database/view/" + id)
-
-@app.route("/database/<id>/delete", methods=['POST'])
-def delete_data(id):
-    try:
-        global root
-        id = id.split(">")
-        db_id = id[0]
-        _id = id[1]
-        api = {'username': session['username'], 'password': session['password'], 'database-id': db_id}
-        root = delete(root, api, _id)
-        store_avl(root)
-
-        return redirect('/database/view/' + db_id)
-
-    except:
-        return render_template('error.html', code = 500, message = "Internal Server Error", dir = "/database/view/" + db_id)
-    
-@app.route("/data/insert", methods=['POST'])
-def insertData():
-    try:
-        global root
-        receive = request.get_json()
-        api = receive['api']
-        data = receive['data']
-        root = insert(root, api, data)
-        store_avl(root)
-
-        return json.dumps({'success': True, 'data': data}), 201, {'ContentType':'application/json'}
-
-    except Exception as error:
-        return json.dumps({'success': False, 'errors': {'code': 500, 'message': 'Internal Server Error', 'error': error}}), 500, {'ContentType':'application/json'}
-
-@app.route("/data/delete", methods=['DELETE'])
-def deleteData():
-    try:
-        global root
-        receive = request.get_json()
-        api = receive['api']
-        _id = receive['_id']
-        root = delete(root, api, _id)
-        store_avl(root)
-
-        return json.dumps({'success': True}), 204, {'ContentType':'application/json'}
-
-    except Exception as error:
-        return json.dumps({'success': False, 'errors': {'code': 500, 'message': 'Internal Server Error', 'error': error}}), 500, {'ContentType':'application/json'}
-
-@app.route("/data/fetch", methods=['GET', 'POST'])
-def fetchData():
-    try:
-        global root
-        receive = request.get_json()
-        api = receive['api']
-        data = getData(root, api)
-
-        return json.dumps({'success': True, 'data': data}), 202, {'ContentType':'application/json'}
-
-    except Exception as error:
-        return json.dumps({'success': False, 'errors': {'code': 500, 'message': 'Internal Server Error', 'error': error}}), 500, {'ContentType':'application/json'}    
-
-@app.route("/data/search", methods=['POST'])
-def searchData():
-    try:
-        global root
-        receive = request.get_json()
-        api = receive['api']
-        _id = receive['_id']
-        data = search(root, api, _id)
-
-        return json.dumps({'success': True, 'data': data}), 202, {'ContentType':'application/json'}
-
-    except Exception as error:
-        return json.dumps({'success': False, 'errors': {'code': 500, 'message': 'Internal Server Error', 'error': error}}), 500, {'ContentType':'application/json'}
-
-if __name__ == "__main__":
-    app.run()
+api = {'username': 'codejapoe', 'password': 'Hackcode'}
+data = createAccount(root, api)
+if data is not False:
+    root = data
+api['database-id'] = 'akkdb'
+root = createDatabase(root, api)
+root = insert(root, api, {"name":"Aung", "_id":"iee"})
+root = insert(root, api, {"name":"Noel", "_id":"noel"})
+api['database-id'] = 'nullbytesdb'
+root = createDatabase(root, api)
+root = insert(root, api, {"name":"Mario", "_id":"mario"})
+root = insert(root, api, {"age":"17", "_id":"iee"})
+print(root)

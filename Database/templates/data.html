@@ -69,7 +69,7 @@
                     </li>
 
                     <li class="side-nav-item">
-                        <a href="https://github.com/codejapoe/Null-Bytes" target="_blank" class="side-nav-link active">
+                        <a href="https://github.com/codejapoe/Null-Bytes" target="_blank" class="side-nav-link">
                             <i class="uil-github"></i>
                             <span> Github </span>
                         </a>
@@ -77,7 +77,7 @@
                     
                     <li class="side-nav-title side-nav-item">Components</li>
 
-                    <li class="side-nav-item">
+                    <li class="side-nav-item active">
                         <a href="{{ url_for('database') }}" class="side-nav-link active">
                             <i class="uil-database"></i>
                             <span> Database </span>
@@ -96,7 +96,7 @@
                 <div class="help-box text-white text-center">
                     <img src="/static/images/help-icon.svg" height="90" alt="Helper Icon Image" />
                     <h5 class="mt-3">Friendly reminder</h5>
-                    <p class="mb-3">The data are stored on RAM instead of a data file, so the data will be erased once the server is reloaded or upgraded.</p>
+                    <p class="mb-3">This is a demo project. Please host this project on your computer and store data.</p>
                 </div>
                 <!-- end Help Box -->
                 <!-- End Sidebar -->
@@ -140,7 +140,7 @@
                                             </a>
                                         </div>
                                         <div class="col">
-                                            <a class="dropdown-icon-item" href="https://saunik.net" target="_blank">
+                                            <a class="dropdown-icon-item" href="https://codejapoe.xyz" target="_blank">
                                                 <img src="/static/images/profile.jpg" alt="portfolio" style="border-radius: 50%; width: 30px; height: 30px; object-fit: cover;">
                                                 <span>Portfolio</span>
                                             </a>
@@ -209,7 +209,7 @@
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Password</label>
                                     <div class="input-group input-group-merge">
-                                        <input type="password" name="password" class="form-control" value="{{password}}" disabled>
+                                        <input type="password" name="password" id="password" class="form-control" value="{{password}}" disabled>
                                         <div class="input-group-text" data-password="false">
                                             <span class="password-eye"></span>
                                         </div>
@@ -240,7 +240,7 @@
                                         </a>
                                     </form>
                                 </div>
-                                <h4 class="page-title">Database ID: {{id}}</h4>
+                                <h4 class="page-title" id="database-id">Database ID: {{id}}</h4>
                             </div>
                         </div>
                     </div>
@@ -299,41 +299,18 @@
                     </form>
                 </div><!-- /.modal -->
 
-                {% if data == [] %}
-                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" role="alert">
-                        <strong>No data</strong> right now. Insert data.
-                    </div>
-                {% else %}
-                    <table id="basic-datatable" class="table dt-responsive text-wrap w-100">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Data</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                    
-                        <tbody>
-                            {% for i in data.values() %}
-                                <tr>
-                                    <td>
-                                        <strong name="data-id">
-                                            {{i['_id']}}
-                                        </strong>
-                                    </td>
-                                    <td>
-                                        {{i}}
-                                    </td>
-                                    <td>
-                                        <form action="/database/{{id + '>' + i['_id']}}/delete" method="post">
-                                            <button type="submit" class="btn btn-primary btn-sm">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                {% endif %}
+                <table class="table table-centered mb-0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Data</th>
+                            <th class="float-end">Actions</th>
+                        </tr>
+                    </thead>
+                
+                    <tbody id="datatable-body">
+                    </tbody>
+                </table>
             </div>
             <!-- content -->
 
@@ -342,11 +319,11 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6">
-                            <script>document.write(new Date().getFullYear())</script> © Codejapoe - Saunik.net
+                            2022 © Codejapoe - codejapoe.xyz
                         </div>
                         <div class="col-md-6">
                             <div class="text-md-end footer-links d-none d-md-block">
-                                <a href="https://saunik.net" target="_blank">About</a>
+                                <a href="https://codejapoe.xyz" target="_blank">About</a>
                                 <a href="https://www.facebook.com/codejapoe/" target="_blank">Facebook</a>
                                 <a href="https://github.com/codejapoe" target="_blank">Github</a>
                                 <a href="mailto:codejapoe@gmail.com" target="_blank">Contact Developer</a>
@@ -392,5 +369,68 @@
 
     <!-- Datatable Init js -->
     <script src="/static/js/pages/demo.datatable-init.js"></script>
+
+    <script>
+        fetchData();
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+        var databaseID = document.getElementById('database-id').textContent.substring(13);
+
+        async function fetchData() {
+            try {
+                const response = await fetch("/data/fetch", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({'api': {'username': username, 'password': password, 'database-id': databaseID}})
+                });
+                
+                const data = await response.json();
+                let queries = "";
+                
+                for (var _id in data["data"]) {
+                    queries += `<tr id="${_id}"><td><strong name="data-id">${_id}</strong></td><td>${JSON.stringify(data["data"][_id])}</td><td><button type="button" onclick="deleteData('${_id}');" class="btn btn-outline-danger btn-sm">Delete</button></td></tr>`;
+                }
+
+                if (document.getElementById("datatable-body").innerHTML !== queries) {
+                    document.getElementById("datatable-body").innerHTML = queries;
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        }
+
+        function deleteData(dataID) {
+            document.getElementById(dataID).remove();
+
+            try {
+                const response = fetch("/data/delete", {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({'api': {'username': username, 'password': password, 'database-id': databaseID}, '_id': dataID})
+                });
+            } catch (error) {
+                console.error("Error deleting data:", error);
+            }
+        }
+
+        let intervalId;
+
+        function startInterval() {
+            intervalId = setInterval(() => {
+                fetchData();
+            }, 1000);
+        }
+
+        function stopInterval() {
+            clearInterval(intervalId);
+        }
+
+        window.addEventListener('load', startInterval);
+        window.addEventListener('unload', stopInterval);
+    </script>
 </body>
 </html>
