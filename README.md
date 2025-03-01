@@ -2,6 +2,7 @@
 
 Null-Bytes is a document-oriented, NoSQL database program that uses JSON-like collections. This project is created on AVL Data Structure and implemented in Python.
 This repo is for educational purpose and local hosting.
+Beta version (Jun 2022): https://www.facebook.com/codejapoe/posts/pfbid0hJqNsBktXouHdBN8XSHPB4GRhst5ZgfQzRyFnCukJWBHpzKXac1rZZJcqaeRNNwhl
 
 Null-Bytes: https://nullbytes.pythonanywhere.com/  
 Docs: https://null-bytes-docs.web.app/  
